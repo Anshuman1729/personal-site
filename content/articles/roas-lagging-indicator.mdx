@@ -1,0 +1,98 @@
+---
+title: "Why ROAS is a lagging indicator — and what to track instead"
+excerpt: "Everyone optimises for ROAS. The problem is that ROAS tells you what already happened. By the time it moves, the damage is done or the opportunity is gone."
+date: "2026-02-24"
+tag: "Performance"
+status: "published"
+---
+
+## The month Kaaya almost scaled into a loss
+
+Kaaya Skin — a D2C skincare brand doing ₹2Cr/month in revenue — had a ROAS of 3.8x. By most dashboards, things looked healthy. So the founder doubled ad spend in Q3, chasing the number up.
+
+Six weeks later, the brand had burned through an additional ₹40L in media budget. ROAS had actually **climbed to 4.1x** on paper. And yet, net profit had compressed. Customer service tickets were up. Repeat purchases were flat.
+
+What happened? ROAS was measuring revenue against ad spend — but it had no view into *who* was being acquired. The scaling had pulled in deal-hunters via discount-heavy creatives. High first-order value. Near-zero chance of repeat.
+
+> **The core problem:** ROAS is a rear-view mirror. It reflects the quality of decisions you *already* made — not the quality of customers you're building a business on.
+
+<ROASTimeline />
+
+---
+
+## Lagging vs. leading — what's the actual difference?
+
+A **lagging indicator** confirms a trend after it's happened. It's useful for reporting, not decision-making. ROAS, revenue, and MoM growth all live here.
+
+A **leading indicator** predicts where things are heading. It gives you a window to act before the outcome crystallises. nCAC and LTV — tracked by cohort — are leading indicators.
+
+<MetricFilter />
+
+---
+
+## nCAC × LTV — your new compass
+
+The metric I actually optimise to is the **LTV:nCAC ratio**. For a D2C brand with a 12-month LTV window, you want this ratio at 3x or above. Below 2x, you're buying revenue at cost.
+
+The key word is *new* customers. Most brands calculate CAC against all orders — including repeat purchases — which artificially deflates the number and makes acquisition look cheaper than it is.
+
+```
+# The core ratio
+LTV : nCAC ratio = 12-month LTV ÷ Net CAC
+
+# Net CAC = what it truly costs to acquire one NEW customer
+nCAC = (Ad Spend + Agency Fees + Creative Costs)
+       ÷ New Customers ONLY (not total orders)
+
+# D2C benchmarks
+LTV:nCAC > 3x  → Healthy. Safe to scale.
+LTV:nCAC 2–3x  → Borderline. Fix before scaling.
+LTV:nCAC < 2x  → Stop. You're buying revenue at a loss.
+```
+
+<RatioCalculator />
+
+---
+
+## How Kaaya's cohorts told the real story
+
+When we went back into the data, we split Kaaya's customers by acquisition channel and month — not by total revenue. Two things became immediately visible.
+
+Both cohorts had similar first-order AOVs. ROAS couldn't tell them apart. But their 30-day repeat behaviour diverged by nearly 3x — which meant their actual LTV was incomparable.
+
+<CohortVisualiser />
+
+> A 4.1x ROAS built on 1.6x LTV:nCAC customers isn't a performance win. It's a margin leak dressed up as growth.
+
+---
+
+## What changed when they switched frameworks
+
+Three months after the switch, Kaaya cut total ad spend by 18% — and grew net profit by 31%. Not because they spent less. Because they **stopped spending on the wrong customers**.
+
+The before/after was simple: stop optimising creative for first-order conversion, and start optimising for repeat intent — reviews, rituals, education. Scale only the channels where LTV:nCAC clears 3x. Track nCAC weekly on new customers only.
+
+---
+
+## How to start tracking this tomorrow
+
+You don't need a data team. You need three columns in a spreadsheet and one discipline: **separate new customers from returning customers** in every report you build.
+
+```
+# Weekly nCAC tracker — minimum viable version
+
+Column A: Week ending date
+Column B: Total spend (ads + agency + creative production)
+Column C: New customer orders ONLY (first purchase, no repeats)
+Column D: nCAC = B ÷ C
+
+# Track the 30-day repeat rate for every weekly cohort
+Column E: % of Column C who reordered within 30 days
+
+# Your alarm bell
+If nCAC rises AND 30-day repeat drops → stop scaling immediately.
+```
+
+Most Shopify and WooCommerce stores can pull new-vs-returning customer splits natively. If you're running Meta or Google, segment your purchase events by new customer tags. It takes 30 minutes to set up. It takes a ROAS-only mindset *six weeks* to find the problem it creates.
+
+> **The takeaway:** ROAS tells you whether yesterday's bet paid off. nCAC:LTV tells you whether tomorrow's is worth making. Run both — but optimise to the one that gives you time to act.
