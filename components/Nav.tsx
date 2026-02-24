@@ -37,7 +37,8 @@ export default function Nav({ activePage }: { activePage?: 'work' | 'thinking' |
           {[
             { href: '/#experience', label: 'Work',     key: 'work'     },
             { href: '/#principles', label: 'Thinking', key: 'thinking' },
-            { href: '/writing',     label: 'Writing',  key: 'writing'  },
+            { href: '/work-with-me', label: 'Work With Me', key: 'work-with-me' },
+          { href: '/writing',     label: 'Writing',  key: 'writing'  },
           ].map(({ href, label, key }) => (
             <li key={key}>
               <Link href={href} style={{
