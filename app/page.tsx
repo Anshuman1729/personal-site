@@ -297,12 +297,12 @@ export default function Home() {
         <div style={wrap}>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
             <FadeUp>
-              <div style={eyebrow}>The Newsletter</div>
+              <div style={eyebrow}>Compound</div>
               <div style={{ fontSize: 'clamp(1.6rem,3vw,2.2rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: 14 }}>
                 Growth thinking, <span style={{ fontStyle: 'italic', fontWeight: 300, color: 'var(--blue)' }}>once a month.</span>
               </div>
               <p style={{ fontSize: '0.9rem', color: 'var(--text-3)', lineHeight: 1.7, maxWidth: 380, margin: 0 }}>
-                One essay per month on performance marketing, acquisition systems, and unit economics. No fluff. Written for marketers who think in frameworks.
+                Compound is one essay per month on performance marketing, acquisition systems, and unit economics. No fluff. Written for marketers who think in frameworks.
               </p>
             </FadeUp>
             <FadeUp delay={100}><NewsletterForm id="hp-nl" /></FadeUp>
