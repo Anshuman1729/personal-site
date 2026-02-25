@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "1d34926abb1422cc56fdfa3187d71bb2",
-    "previewModeSigningKey": "07dd181e4c701f225038433e1a2a72c28bc792aa9ad27459dade01d5a36080a9",
-    "previewModeEncryptionKey": "7466da14faff7764a301d55c6dc9746e5f0bab3b767f928afc30521852182892"
-  }
-}
+{"version":4,"routes":{"/writing/meta-segmentation-trap":{},"/writing/roas-lagging-indicator":{}},"dynamicRoutes":{"/writing/[slug]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/writing/[slug]","routeRegex":"^\\/writing\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"f8115ff3a990f56e480f8f74fc263e11","previewModeSigningKey":"d1742121161df791a382aff01630a6ef008bdb78a83fdc4ec161ea436774224c","previewModeEncryptionKey":"01bee8b24c824299be96cd3bbb90340f7def0833de8f9654eef3c0a4fd9619e6"}}

@@ -12,12 +12,24 @@ import ROASTimeline from '@/components/articles/ROASTimeline'
 import MetricFilter from '@/components/articles/MetricFilter'
 import RatioCalculator from '@/components/articles/RatioCalculator'
 import CohortVisualiser from '@/components/articles/CohortVisualiser'
+import Callout from '@/components/articles/Callout'
+import BeforeAfter from '@/components/articles/BeforeAfter'
+import Chart from '@/components/articles/Chart'
+import { LearningPhaseChart, CreativePerformanceChart, ResultsComparison, SegmentationBeforeAfter, AuditCalculator } from '@/components/articles/MetaSegmentationCharts'
 
 const MDX_COMPONENTS = {
   ROASTimeline,
   MetricFilter,
   RatioCalculator,
   CohortVisualiser,
+  Callout,
+  BeforeAfter,
+  Chart,
+  LearningPhaseChart,
+  CreativePerformanceChart,
+  ResultsComparison,
+  SegmentationBeforeAfter,
+  AuditCalculator,
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
     <h2 style={{ fontSize: 'clamp(1.4rem, 3vw, 1.9rem)', fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.15, color: 'var(--text)', margin: '56px 0 20px' }} {...props} />
   ),
