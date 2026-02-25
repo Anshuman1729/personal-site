@@ -33,7 +33,7 @@ export default function ArticleNewsletterCTA() {
   const done = status === 'ok'
 
   return (
-    <div style={{ background: 'var(--bg-off)', border: '1px solid var(--border)', borderRadius: 12, padding: '40px 44px', marginTop: 64, display: 'grid', gridTemplateColumns: '1fr auto', gap: 32, alignItems: 'center' }}>
+    <div className="article-cta-inner" style={{ background: 'var(--bg-off)', border: '1px solid var(--border)', borderRadius: 12, padding: '40px 44px', marginTop: 64 }}>
       <div>
         <div style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 10 }}>Enjoyed this?</div>
         <div style={{ fontSize: '1.3rem', fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--text)', marginBottom: 8 }}>Join Compound — get the next essay in your inbox.</div>
@@ -41,8 +41,8 @@ export default function ArticleNewsletterCTA() {
         {status === 'ok' && <div style={{ marginTop: 10, fontSize: '0.82rem', color: '#16a34a' }}>You are on the list — first issue coming soon.</div>}
         {status === 'err' && <div style={{ marginTop: 10, fontSize: '0.82rem', color: 'var(--red)' }}>{errMsg}</div>}
       </div>
-      <form onSubmit={submit} style={{ display: 'flex', gap: 10, flexShrink: 0 }}>
-        <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" disabled={done || status === 'loading'} style={{ background: 'var(--bg)', border: '1.5px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'var(--sans)', fontSize: '0.88rem', padding: '12px 16px', outline: 'none', width: 220 }} />
+      <form onSubmit={submit} className="article-cta-form">
+        <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="your@email.com" disabled={done || status === 'loading'} style={{ background: 'var(--bg)', border: '1.5px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'var(--sans)', padding: '12px 16px', outline: 'none' }} />
         <button type="submit" disabled={done || status === 'loading'} style={{ fontFamily: 'var(--sans)', fontSize: '0.82rem', fontWeight: 700, padding: '12px 20px', borderRadius: 8, background: done ? 'var(--text-4)' : 'var(--blue)', color: '#fff', border: 'none', cursor: done || status === 'loading' ? 'default' : 'pointer', whiteSpace: 'nowrap', opacity: status === 'loading' ? 0.7 : 1 }}>
           {done ? 'Subscribed' : status === 'loading' ? 'Subscribing...' : 'Subscribe'}
         </button>

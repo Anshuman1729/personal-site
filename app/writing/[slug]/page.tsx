@@ -96,7 +96,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       <ReadingProgress />
 
       <div style={{ background: 'var(--bg-off)', borderBottom: '1px solid var(--border)', padding: '14px 0', marginTop: 72 }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
           <span style={{ fontSize: '1rem', flexShrink: 0, marginTop: 1 }}>⚠️</span>
           <p style={{ fontSize: '0.78rem', color: 'var(--text-3)', lineHeight: 1.6, margin: 0 }}>
             <strong style={{ color: 'var(--text-2)', fontWeight: 600 }}>Hypothetical scenario.</strong>
@@ -111,7 +111,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           backgroundImage: 'linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)',
           backgroundSize: '80px 80px', opacity: 0.4,
         }} />
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px', position: 'relative', zIndex: 1 }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <Link href="/writing" style={{
             display: 'inline-flex', alignItems: 'center', gap: 8,
             fontSize: '0.78rem', fontWeight: 600, letterSpacing: '0.06em',
@@ -137,7 +137,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       </header>
 
       <main style={{ padding: '72px 0 100px' }}>
-        <div style={{ maxWidth: 720, margin: '0 auto', padding: '0 40px' }}>
+        <div className="article-body">
           <MDXRemote source={article.content} components={MDX_COMPONENTS} />
           <ArticleNewsletterCTA />
         </div>

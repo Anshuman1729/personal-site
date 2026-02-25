@@ -20,7 +20,7 @@ function useFadeUp() {
   return ref
 }
 
-function FadeUp({ children, delay = 0, style = {} }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties }) {
+function FadeUp({ children, delay = 0, style = {}, className = '' }: { children: React.ReactNode; delay?: number; style?: React.CSSProperties; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
   useEffect(() => {
     const el = ref.current; if (!el) return
@@ -31,7 +31,7 @@ function FadeUp({ children, delay = 0, style = {} }: { children: React.ReactNode
     return () => io.disconnect()
   }, [])
   return (
-    <div ref={ref} style={{ opacity: 0, transform: 'translateY(28px)', transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}ms`, ...style }}>
+    <div ref={ref} className={className} style={{ opacity: 0, transform: 'translateY(28px)', transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}ms, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${delay}ms`, ...style }}>
       {children}
     </div>
   )
@@ -78,7 +78,7 @@ function NewsletterForm({ id }: { id: string }) {
     <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <input type="email" value={email} onChange={e => setEmail(e.target.value)}
         placeholder="your@email.com" disabled={done || status === 'loading'} id={id}
-        style={{ width: '100%', background: 'var(--bg)', border: '1.5px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'var(--sans)', fontSize: '0.9rem', padding: '14px 16px', outline: 'none' }}
+        style={{ width: '100%', background: 'var(--bg)', border: '1.5px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'var(--sans)', padding: '14px 16px', outline: 'none' }}
       />
       {status === 'ok'  && <div style={{ fontSize: '0.82rem', padding: '12px 16px', borderRadius: 8, background: 'rgba(34,197,94,0.08)', color: '#16a34a', border: '1px solid rgba(34,197,94,0.2)' }}>You are on the list — first issue coming soon.</div>}
       {status === 'err' && <div style={{ fontSize: '0.82rem', padding: '12px 16px', borderRadius: 8, background: 'rgba(239,68,68,0.08)', color: '#dc2626', border: '1px solid rgba(239,68,68,0.2)' }}>{errMsg}</div>}
@@ -102,8 +102,8 @@ export default function Home() {
     return () => window.removeEventListener('scroll', h)
   }, [])
 
-  const S = { section: { padding: '110px 0', borderBottom: '1px solid var(--border)' } as React.CSSProperties }
-  const wrap = { maxWidth: 1080, margin: '0 auto', padding: '0 40px' }
+  const S = { section: { borderBottom: '1px solid var(--border)' } as React.CSSProperties }
+  const wrap = { maxWidth: 1080, margin: '0 auto' }
   const eyebrow = { fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase' as const, color: 'var(--blue)', marginBottom: 14 }
   const sectionH = { fontSize: 'clamp(2.2rem,4vw,3.2rem)', fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.05 }
 
@@ -112,14 +112,14 @@ export default function Home() {
       <Nav />
 
       {/* ── HERO ── */}
-      <section id="hero" style={{ minHeight: '100svh', display: 'grid', alignContent: 'end', paddingTop: 120, paddingBottom: 100, borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
+      <section id="hero" className="hero-inner" style={{ minHeight: '100svh', display: 'grid', alignContent: 'end', borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
         {/* grid bg */}
         <div aria-hidden style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)', backgroundSize: '80px 80px', opacity: 0.5, maskImage: 'radial-gradient(ellipse 80% 60% at 50% 100%, black 40%, transparent 100%)' }} />
         {/* orb */}
-        <div aria-hidden style={{ position: 'absolute', width: 600, height: 600, right: -80, top: '50%', transform: 'translateY(-60%)', background: 'radial-gradient(circle, rgba(0,87,255,0.09) 0%, transparent 70%)', borderRadius: '50%', animation: 'orb 8s ease-in-out infinite', pointerEvents: 'none' }} />
+        <div aria-hidden className="hero-orb" style={{ position: 'absolute', width: 600, height: 600, right: -80, top: '50%', transform: 'translateY(-60%)', background: 'radial-gradient(circle, rgba(0,87,255,0.09) 0%, transparent 70%)', borderRadius: '50%', animation: 'orb 8s ease-in-out infinite', pointerEvents: 'none' }} />
         <style>{`@keyframes orb{0%,100%{transform:translateY(-60%) scale(1)}50%{transform:translateY(-55%) scale(1.06)}} @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}} @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}`}</style>
 
-        <div style={{ ...wrap, position: 'relative', zIndex: 1 }}>
+        <div className="wrap" style={{ ...wrap, position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 32 }}>
             <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#22c55e', animation: 'blink 2.4s ease-in-out infinite' }} />
             Available · Bengaluru, India
@@ -144,7 +144,7 @@ export default function Home() {
       <div style={{ overflow: 'hidden', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '16px 0', background: 'var(--bg-off)' }} aria-hidden>
         <div style={{ display: 'flex', animation: 'tick 30s linear infinite', width: 'max-content' }}>
           {[...TICKER_ITEMS, ...TICKER_ITEMS].map((item, i) => (
-            <span key={i} style={{ display: 'inline-flex', alignItems: 'center', gap: 28, padding: '0 36px', fontSize: '0.76rem', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', whiteSpace: 'nowrap' }}>
+            <span key={i} className="ticker-item" style={{ fontSize: '0.76rem', fontWeight: 500, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--text-3)', whiteSpace: 'nowrap' }}>
               {item} <span style={{ width: 4, height: 4, borderRadius: '50%', background: 'var(--blue)', flexShrink: 0 }} />
             </span>
           ))}
@@ -152,10 +152,10 @@ export default function Home() {
       </div>
 
       {/* ── METRICS ── */}
-      <section id="metrics" style={{ padding: '100px 0', borderBottom: '1px solid var(--border)' }}>
-        <div style={wrap}>
+      <section id="metrics" className="section-pad" style={{ borderBottom: '1px solid var(--border)' }}>
+        <div className="wrap" style={wrap}>
           <div style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-4)', marginBottom: 48 }}>By the numbers</div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
+          <div className="grid-metrics">
             {[
               { num: '3.1×', desc: 'Revenue baseline growth', sub: '₹80L → ₹2.5Cr non-peak monthly' },
               { num: '₹5Cr', desc: 'Peak-period revenue',     sub: 'via global & NRI audience expansion' },
@@ -172,13 +172,13 @@ export default function Home() {
       </section>
 
       {/* ── PRINCIPLES ── */}
-      <section id="principles" style={S.section}>
-        <div style={wrap}>
+      <section id="principles" className="section-pad" style={S.section}>
+        <div className="wrap" style={wrap}>
           <div style={{ marginBottom: 64 }}>
             <div style={eyebrow}>How I Think</div>
             <h2 style={sectionH}>Principles</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2,1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
+          <div className="grid-principles">
             {[
               { n: '01', title: ['Predictability', ' over volatility'], body: 'A channel that delivers 80% of target every month beats one that swings 50–150%. Compounding needs a stable foundation before it needs a higher ceiling.' },
               { n: '02', title: ['Segment', ' before you scale'],       body: 'Scaling on blended averages is a trap. Know exactly which cohorts carry the numbers before you pour fuel — otherwise you\'re growing your worst customers fastest.' },
@@ -198,8 +198,8 @@ export default function Home() {
       </section>
 
       {/* ── EXPERIENCE ── */}
-      <section id="experience" style={S.section}>
-        <div style={wrap}>
+      <section id="experience" className="section-pad" style={S.section}>
+        <div className="wrap" style={wrap}>
           <div style={{ marginBottom: 64 }}>
             <div style={eyebrow}>Work History</div>
             <h2 style={sectionH}>Experience</h2>
@@ -221,7 +221,7 @@ export default function Home() {
               bullets: ['Reduced CAC by 20% and grew new users by 25% for Urban Company via audience restructuring.', 'Delivered 22% revenue growth for a luxury fashion brand through intent-layered campaign architecture.', 'Maintained 6.4 ROAS across Performance Max and Search using structured intent frameworks.'],
             },
           ].map((exp, i) => (
-            <FadeUp key={i} style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: 56, padding: '52px 0', borderBottom: i < 2 ? '1px solid var(--border)' : 'none' }}>
+            <FadeUp key={i} className="grid-experience-row" style={{ padding: '52px 0', borderBottom: i < 2 ? '1px solid var(--border)' : 'none' }}>
               <div style={{ paddingTop: 3 }}>
                 <div style={{ fontSize: '0.75rem', letterSpacing: '0.06em', color: 'var(--text-4)', textTransform: 'uppercase', marginBottom: 6 }}>{exp.period}</div>
                 <div style={{ fontSize: '1.4rem', fontWeight: 700, letterSpacing: '-0.02em', marginBottom: 4 }}>{exp.co}</div>
@@ -244,13 +244,13 @@ export default function Home() {
       </section>
 
       {/* ── NOW ── */}
-      <section id="now" style={S.section}>
-        <div style={wrap}>
+      <section id="now" className="section-pad" style={S.section}>
+        <div className="wrap" style={wrap}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 64, flexWrap: 'wrap', gap: 24 }}>
             <div><div style={eyebrow}>Right Now</div><h2 style={sectionH}>Currently</h2></div>
             <span style={{ fontSize: '0.75rem', color: 'var(--text-4)' }}>Updated Feb 2026</span>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
+          <div className="grid-currently">
             {[
               { tag: 'Working on',     title: 'Acquisition efficiency at Meesho',       body: 'Building contribution-margin-led growth systems at scale. Thinking deeply about how paid and organic interact at high volume.' },
               { tag: 'Exploring',      title: 'Growth loops & compounding systems',      body: 'What makes an acquisition loop self-sustaining vs. one that needs constant fuel? Working through this with live data from paid channels.' },
@@ -267,8 +267,8 @@ export default function Home() {
       </section>
 
       {/* ── WRITING ── */}
-      <section id="writing" style={S.section}>
-        <div style={wrap}>
+      <section id="writing" className="section-pad" style={S.section}>
+        <div className="wrap" style={wrap}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', marginBottom: 64, flexWrap: 'wrap', gap: 24 }}>
             <div><div style={eyebrow}>Essays & Notes</div><h2 style={sectionH}>Writing</h2></div>
             <Link href="/writing" style={{ fontSize: '0.78rem', fontWeight: 500, color: 'var(--text-3)', borderBottom: '1px solid var(--border-mid)', paddingBottom: 2 }}>All writing →</Link>
@@ -294,8 +294,8 @@ export default function Home() {
 
       {/* ── NEWSLETTER ── */}
       <section style={{ background: 'var(--bg-off)', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)', padding: '72px 0' }}>
-        <div style={wrap}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+        <div className="wrap" style={wrap}>
+          <div className="grid-newsletter">
             <FadeUp>
               <div style={eyebrow}>Compound</div>
               <div style={{ fontSize: 'clamp(1.6rem,3vw,2.2rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.1, marginBottom: 14 }}>
@@ -311,9 +311,9 @@ export default function Home() {
       </section>
 
       {/* ── CONTACT ── */}
-      <section id="contact" style={{ padding: '110px 0 80px' }}>
-        <div style={wrap}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'start' }}>
+      <section id="contact" className="section-pad" style={{ paddingBottom: 80 }}>
+        <div className="wrap" style={wrap}>
+          <div className="grid-contact">
             <FadeUp>
               <div style={eyebrow}>Get in Touch</div>
               <h2 style={{ fontSize: 'clamp(2.4rem,5vw,4rem)', fontWeight: 800, letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: 20 }}>
@@ -343,7 +343,7 @@ export default function Home() {
 
       {/* ── EDUCATION ── */}
       <section style={{ padding: '72px 0', borderTop: '1px solid var(--border)', borderBottom: '1px solid var(--border)' }}>
-        <div style={wrap}>
+        <div className="wrap" style={wrap}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 32, flexWrap: 'wrap' }}>
             <FadeUp>
               <div style={{ ...eyebrow, marginBottom: 10 }}>Education</div>
@@ -376,12 +376,12 @@ function ContactForm() {
     setTimeout(() => { setStatus('ok'); setDone(true) }, 1400)
   }
 
-  const inputStyle: React.CSSProperties = { width: '100%', background: 'var(--bg-off)', border: '1.5px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'var(--sans)', fontSize: '0.9rem', padding: '13px 16px', outline: 'none' }
+  const inputStyle: React.CSSProperties = { width: '100%', background: 'var(--bg-off)', border: '1.5px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'var(--sans)', padding: '13px 16px', outline: 'none' }
   const labelStyle: React.CSSProperties = { fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-3)', display: 'block', marginBottom: 7 }
 
   return (
     <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+      <div className="grid-form-row">
         <div><label style={labelStyle}>Name *</label><input style={inputStyle} value={vals.name} onChange={set('name')} placeholder="Your name" required /></div>
         <div><label style={labelStyle}>Email *</label><input style={inputStyle} type="email" value={vals.email} onChange={set('email')} placeholder="you@company.com" required /></div>
       </div>

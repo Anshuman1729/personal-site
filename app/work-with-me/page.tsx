@@ -96,7 +96,7 @@ export default function WorkWithMePage() {
       {/* HERO */}
       <header style={{ paddingTop: 160, paddingBottom: 100, borderBottom: '1px solid var(--border)', position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', inset: 0, backgroundImage: 'linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px)', backgroundSize: '80px 80px', opacity: 0.4, maskImage: 'radial-gradient(ellipse 70% 60% at 20% 100%, black 30%, transparent 100%)' }} />
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px', position: 'relative', zIndex: 1 }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 24 }}>
             <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#22c55e', animation: 'blink 2.4s ease-in-out infinite' }} />
             Taking on clients · 2 spots available
@@ -117,8 +117,8 @@ export default function WorkWithMePage() {
       {/* SERVICES */}
       <section style={{ borderBottom: '1px solid var(--border)' }}>
         <div style={{ maxWidth: 1080, margin: '0 auto' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '280px 1fr' }}>
-            <div style={{ borderRight: '1px solid var(--border)', padding: '64px 0' }}>
+          <div className="grid-services">
+            <div className="services-sidebar">
               <div style={{ padding: '0 40px', marginBottom: 32, fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-4)' }}>Services</div>
               {SERVICES.map((s, i) => (
                 <button key={s.id} onClick={() => setActiveService(i)} style={{ display: 'block', width: '100%', textAlign: 'left', padding: '20px 40px', border: 'none', cursor: 'pointer', background: activeService === i ? 'var(--blue-light)' : 'transparent', borderRight: activeService === i ? '2px solid var(--blue)' : '2px solid transparent', transition: 'all 0.2s' }}>
@@ -130,7 +130,7 @@ export default function WorkWithMePage() {
             </div>
 
             {SERVICES.map((s, i) => (
-              <div key={s.id} style={{ display: i === activeService ? 'block' : 'none', padding: '64px 56px' }}>
+              <div key={s.id} className="services-detail" style={{ display: i === activeService ? 'block' : 'none' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24, flexWrap: 'wrap' }}>
                   <span style={{ fontSize: '0.68rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--blue)', background: 'var(--blue-light)', padding: '4px 12px', borderRadius: 100 }}>{s.duration}</span>
                   <span style={{ fontSize: '0.88rem', fontWeight: 700, color: 'var(--text)' }}>{s.price}</span>
@@ -164,8 +164,8 @@ export default function WorkWithMePage() {
 
       {/* CREDIBILITY */}
       <section style={{ padding: '100px 0', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
+          <div className="grid-credibility">
             <div>
               <div style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 14 }}>Why me</div>
               <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.05, marginBottom: 24 }}>
@@ -198,10 +198,10 @@ export default function WorkWithMePage() {
 
       {/* HOW IT WORKS */}
       <section style={{ padding: '100px 0', borderBottom: '1px solid var(--border)', background: 'var(--bg-off)' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px' }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
           <div style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 14 }}>The process</div>
           <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.05, marginBottom: 64 }}>How it works</h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
+          <div className="grid-how-it-works">
             {[
               { step: '01', title: 'Book intro call', body: 'Pick a slot below. A free 20-minute call to understand your situation — no pitch, no commitment.' },
               { step: '02', title: 'Scope the work',  body: 'If there is a fit, I will send a short brief outlining what we will do, what it costs, and what you will walk away with.' },
@@ -220,7 +220,7 @@ export default function WorkWithMePage() {
 
       {/* BOOKING */}
       <section id="book" style={{ padding: '100px 0', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px' }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
           <div style={{ textAlign: 'center', marginBottom: 56 }}>
             <div style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 14 }}>Book a call</div>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.05, marginBottom: 14 }}>Pick a time that works.</h2>
@@ -228,8 +228,8 @@ export default function WorkWithMePage() {
               20 minutes. Free. We will figure out if and how I can help.
             </p>
           </div>
-          <div style={{ border: '1px solid var(--border)', borderRadius: 12, overflow: 'hidden', background: 'var(--bg-off)' }}>
-            <iframe src={GCAL_SRC} style={{ border: 0, display: 'block' }} width="100%" height="650" frameBorder={0} title="Book a call with Anshuman Khare" />
+          <div className="iframe-wrapper">
+            <iframe src={GCAL_SRC} width="100%" frameBorder={0} title="Book a call with Anshuman Khare" />
           </div>
           <p style={{ marginTop: 16, fontSize: '0.78rem', color: 'var(--text-4)', textAlign: 'center' }}>
             Prefer email? <a href="mailto:khare.anshuman47@gmail.com" style={{ color: 'var(--blue)' }}>khare.anshuman47@gmail.com</a>
@@ -239,8 +239,8 @@ export default function WorkWithMePage() {
 
       {/* FAQ */}
       <section style={{ padding: '100px 0', borderBottom: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 80 }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
+          <div className="grid-faq">
             <div>
               <div style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 14 }}>FAQ</div>
               <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.025em', lineHeight: 1.05 }}>Common<br />questions.</h2>

@@ -20,7 +20,7 @@ export default function WritingPage() {
 
       {/* PAGE HEADER */}
       <header style={{ paddingTop: 140, paddingBottom: 64, borderBottom: '1px solid var(--border)' }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px' }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
           <div style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--blue)', marginBottom: 14 }}>
             Essays &amp; Notes
           </div>
@@ -36,7 +36,7 @@ export default function WritingPage() {
       {/* FEATURED */}
       {featured && (
         <section style={{ padding: '72px 0 56px', borderBottom: '1px solid var(--border)' }}>
-          <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px' }}>
+          <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
             <div style={{
               fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.14em',
               textTransform: 'uppercase', color: 'var(--text-4)',
@@ -45,11 +45,8 @@ export default function WritingPage() {
               Featured Essay
               <span style={{ flex: 1, height: 1, background: 'var(--border)' }} />
             </div>
-            <Link href={`/writing/${featured.slug}`} style={{
-              display: 'grid', gridTemplateColumns: '1fr 1fr',
-              border: '1px solid var(--border)',
+            <Link href={`/writing/${featured.slug}`} className="grid-featured-article" style={{
               transition: 'box-shadow 0.3s',
-              textDecoration: 'none', color: 'inherit',
             }}>
               <div style={{ padding: '52px 48px', background: 'var(--bg)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                 <div>
@@ -78,9 +75,9 @@ export default function WritingPage() {
                 </div>
               </div>
               {/* Visual panel */}
-              <div style={{
+              <div className="featured-visual-panel" style={{
                 background: 'var(--bg-off)', borderLeft: '1px solid var(--border)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                alignItems: 'center', justifyContent: 'center',
                 padding: 52, position: 'relative', overflow: 'hidden', minHeight: 320,
               }}>
                 <div style={{
@@ -101,22 +98,21 @@ export default function WritingPage() {
 
       {/* ARTICLE LIST */}
       <section style={{ paddingBottom: 100 }}>
-        <div style={{ maxWidth: 1080, margin: '0 auto', padding: '0 40px' }}>
+        <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
           {articles.length === 0 && (
             <p style={{ paddingTop: 64, color: 'var(--text-3)', fontSize: '0.95rem' }}>
               First essays coming soon.
             </p>
           )}
           {articles.map((article, i) => (
-            <Link key={article.slug} href={`/writing/${article.slug}`} style={{
-              display: 'grid', gridTemplateColumns: '80px 1fr auto',
-              alignItems: 'start', gap: 28, padding: '32px 0',
+            <Link key={article.slug} href={`/writing/${article.slug}`} className="grid-article-row" style={{
+              padding: '32px 0',
               borderBottom: '1px solid var(--border)',
               borderTop: i === 0 ? '1px solid var(--border)' : 'none',
               textDecoration: 'none', color: 'inherit',
               transition: 'padding-left 0.3s cubic-bezier(0.16,1,0.3,1)',
             }}>
-              <div style={{ fontSize: '0.78rem', fontWeight: 700, color: 'var(--text-4)', paddingTop: 3 }}>
+              <div className="article-index">
                 {String(i + 1).padStart(2, '0')}
               </div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
