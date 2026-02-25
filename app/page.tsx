@@ -38,25 +38,52 @@ function FadeUp({ children, delay = 0, style = {} }: { children: React.ReactNode
 }
 
 /* ── Newsletter form ─────────────────────────────────── */
+const BEEHIIV_PUB_ID = 'pub_1209a3dd-cebb-4f60-b283-177893e6a2cb'
+const BEEHIIV_API_KEY = 'LUeYUUu3sqIuQMbdBlnh46rcDzFPhAhC9dDKKmqnAyMqebYZCUf9eaHp4F6Joj7Q'
+
 function NewsletterForm({ id }: { id: string }) {
   const [email, setEmail] = useState('')
-  const [status, setStatus] = useState<'idle' | 'ok' | 'err'>('idle')
-  const [done, setDone] = useState(false)
-  const submit = (e: React.FormEvent) => {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'ok' | 'err'>('idle')
+  const [errMsg, setErrMsg] = useState('')
+
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus('err'); return }
-    setStatus('ok'); setDone(true); setEmail('')
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setErrMsg('Please enter a valid email address.')
+      setStatus('err')
+      return
+    }
+    setStatus('loading')
+    try {
+      const res = await fetch('/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (res.ok) { setStatus('ok'); setEmail('') }
+      else {
+        setErrMsg(data?.error ?? 'Something went wrong. Please try again.')
+        setStatus('err')
+      }
+    } catch {
+      setErrMsg('Network error. Please try again.')
+      setStatus('err')
+    }
   }
+
+  const done = status === 'ok'
+
   return (
     <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <input type="email" value={email} onChange={e => setEmail(e.target.value)}
-        placeholder="your@email.com" disabled={done} id={id}
+        placeholder="your@email.com" disabled={done || status === 'loading'} id={id}
         style={{ width: '100%', background: 'var(--bg)', border: '1.5px solid var(--border)', borderRadius: 8, color: 'var(--text)', fontFamily: 'var(--sans)', fontSize: '0.9rem', padding: '14px 16px', outline: 'none' }}
       />
-      {status === 'ok'  && <div style={{ fontSize: '0.82rem', padding: '12px 16px', borderRadius: 8, background: 'rgba(34,197,94,0.08)', color: '#16a34a', border: '1px solid rgba(34,197,94,0.2)' }}>You&apos;re on the list — first issue coming soon.</div>}
-      {status === 'err' && <div style={{ fontSize: '0.82rem', padding: '12px 16px', borderRadius: 8, background: 'rgba(239,68,68,0.08)', color: '#dc2626', border: '1px solid rgba(239,68,68,0.2)' }}>Please enter a valid email address.</div>}
-      <button type="submit" disabled={done} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--sans)', fontSize: '0.85rem', fontWeight: 700, padding: '15px 24px', borderRadius: 8, background: done ? 'var(--text-4)' : 'var(--blue)', color: '#fff', border: 'none', cursor: done ? 'default' : 'pointer' }}>
-        {done ? 'Subscribed ✓' : "Subscribe — it's free →"}
+      {status === 'ok'  && <div style={{ fontSize: '0.82rem', padding: '12px 16px', borderRadius: 8, background: 'rgba(34,197,94,0.08)', color: '#16a34a', border: '1px solid rgba(34,197,94,0.2)' }}>You are on the list — first issue coming soon.</div>}
+      {status === 'err' && <div style={{ fontSize: '0.82rem', padding: '12px 16px', borderRadius: 8, background: 'rgba(239,68,68,0.08)', color: '#dc2626', border: '1px solid rgba(239,68,68,0.2)' }}>{errMsg}</div>}
+      <button type="submit" disabled={done || status === 'loading'} style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'var(--sans)', fontSize: '0.85rem', fontWeight: 700, padding: '15px 24px', borderRadius: 8, background: done ? 'var(--text-4)' : 'var(--blue)', color: '#fff', border: 'none', cursor: done || status === 'loading' ? 'default' : 'pointer', opacity: status === 'loading' ? 0.7 : 1 }}>
+        {done ? 'Subscribed' : status === 'loading' ? 'Subscribing...' : "Subscribe — it's free →"}
       </button>
       <p style={{ fontSize: '0.72rem', color: 'var(--text-4)', textAlign: 'center' }}>Free forever · One email a month · Unsubscribe anytime</p>
     </form>

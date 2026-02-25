@@ -1,3 +1,4 @@
 {
-  "/work-with-me/page": "app/work-with-me/page.js"
+  "/api/subscribe/route": "app/api/subscribe/route.js",
+  "/page": "app/page.js"
 }
