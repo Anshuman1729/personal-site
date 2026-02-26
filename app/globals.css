@@ -20,10 +20,11 @@
   --amber:      #d97706;
   --sans:       'Plus Jakarta Sans', system-ui, sans-serif;
   --ease:       cubic-bezier(0.16, 1, 0.3, 1);
+  --bg-blur:    rgba(255,255,255,0.97);
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --bg:         #0a0a0a;
     --bg-off:     #111110;
     --bg-card:    #1a1a18;
@@ -36,7 +37,24 @@
     --blue-light: #0a1428;
     --green-light:#0a1f0f;
     --red-light:  #1f0a0a;
+    --bg-blur:    rgba(10,10,10,0.97);
   }
+}
+
+:root[data-theme="dark"] {
+  --bg:         #0a0a0a;
+  --bg-off:     #111110;
+  --bg-card:    #1a1a18;
+  --border:     #242420;
+  --border-mid: #383834;
+  --text:       #f0f0ea;
+  --text-2:     #c8c8c0;
+  --text-3:     #888880;
+  --text-4:     #444440;
+  --blue-light: #0a1428;
+  --green-light:#0a1f0f;
+  --red-light:  #1f0a0a;
+  --bg-blur:    rgba(10,10,10,0.97);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -108,12 +126,9 @@ input, textarea, select { font-size: 16px !important; }
 @media (max-width: 768px) {
   .nav-mobile {
     display: flex; flex-direction: column; position: fixed; inset: 0;
-    background: rgba(255,255,255,0.97); backdrop-filter: blur(20px);
+    background: var(--bg-blur); backdrop-filter: blur(20px);
     z-index: 199; align-items: center; justify-content: center;
     gap: 32px; font-size: 1.4rem; font-weight: 700; letter-spacing: -0.02em;
-  }
-  @media (prefers-color-scheme: dark) {
-    .nav-mobile { background: rgba(10,10,10,0.97); }
   }
   .nav-mobile--hidden { display: none; }
 }
