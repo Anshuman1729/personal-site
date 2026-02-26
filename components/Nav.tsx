@@ -22,7 +22,7 @@ export default function Nav({ activePage }: { activePage?: 'work' | 'thinking' |
     <nav style={{
       position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200,
       transition: 'all 0.4s cubic-bezier(0.16,1,0.3,1)',
-      background: scrolled ? 'rgba(255,255,255,0.88)' : 'transparent',
+      background: scrolled ? 'color-mix(in srgb, var(--bg) 88%, transparent)' : 'transparent',
       backdropFilter: scrolled ? 'blur(20px) saturate(180%)' : 'none',
       borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
     }}>

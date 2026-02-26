@@ -77,7 +77,20 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: article.title,
     description: article.excerpt,
-    openGraph: { title: article.title, description: article.excerpt, type: 'article' },
+    openGraph: {
+      title: article.title,
+      description: article.excerpt,
+      type: 'article',
+      publishedTime: article.date,
+      authors: ['Anshuman Khare'],
+      images: [{ url: '/og-default.png', width: 1200, height: 630, alt: article.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: article.title,
+      description: article.excerpt,
+      images: ['/og-default.png'],
+    },
   }
 }
 
@@ -90,10 +103,32 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
     month: 'long', year: 'numeric',
   })
 
+  const allArticles = getAllArticles()
+  const related = allArticles
+    .filter(a => a.slug !== slug)
+    .sort((a, b) => (a.tag === article.tag ? -1 : 0) - (b.tag === article.tag ? -1 : 0))
+    .slice(0, 2)
+
+  const articleJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: article.title,
+    description: article.excerpt,
+    datePublished: article.date,
+    author: { '@type': 'Person', name: 'Anshuman Khare', url: 'https://anshumankhare.com' },
+    publisher: { '@type': 'Person', name: 'Anshuman Khare', url: 'https://anshumankhare.com' },
+    url: `https://anshumankhare.com/writing/${slug}`,
+  }
+
   return (
     <>
       <Nav activePage="writing" />
       <ReadingProgress />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
+      />
 
       <div style={{ background: 'var(--bg-off)', borderBottom: '1px solid var(--border)', padding: '14px 0', marginTop: 72 }}>
         <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto', display: 'flex', alignItems: 'flex-start', gap: 12 }}>
@@ -142,6 +177,39 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
           <ArticleNewsletterCTA />
         </div>
       </main>
+
+      {/* ── RELATED ARTICLES ── */}
+      {related.length > 0 && (
+        <section style={{ borderTop: '1px solid var(--border)', padding: '72px 0' }}>
+          <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
+            <div style={{ fontSize: '0.72rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-4)', marginBottom: 40, display: 'flex', alignItems: 'center', gap: 12 }}>
+              More to read
+              <span style={{ flex: 1, height: 1, background: 'var(--border)' }} />
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 1, background: 'var(--border)', border: '1px solid var(--border)' }}>
+              {related.map(rel => (
+                <Link key={rel.slug} href={`/writing/${rel.slug}`} style={{ background: 'var(--bg)', padding: '40px 36px', textDecoration: 'none', color: 'inherit', display: 'flex', flexDirection: 'column', gap: 12 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                    <span style={{ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--blue)', background: 'var(--blue-light)', padding: '3px 10px', borderRadius: 100 }}>
+                      {rel.tag}
+                    </span>
+                    <span style={{ fontSize: '0.72rem', color: 'var(--text-4)' }}>{rel.readingTime}</span>
+                  </div>
+                  <div style={{ fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.015em', lineHeight: 1.3, color: 'var(--text)' }}>
+                    {rel.title}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: 'var(--text-3)', lineHeight: 1.65 }}>
+                    {rel.excerpt}
+                  </div>
+                  <div style={{ marginTop: 'auto', paddingTop: 16, fontSize: '0.85rem', color: 'var(--blue)', fontWeight: 500 }}>
+                    Read essay →
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <Footer />
     </>
