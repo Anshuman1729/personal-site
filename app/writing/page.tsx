@@ -3,15 +3,17 @@ import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import ArticleList from '@/components/ArticleList'
-import { getAllArticles } from '@/lib/articles'
+import { getPublishedArticles } from '@/lib/db-articles'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Writing',
   description: 'Essays on performance marketing, growth systems, and unit economics.',
 }
 
-export default function WritingPage() {
-  const articles = getAllArticles()
+export default async function WritingPage() {
+  const articles = await getPublishedArticles()
   const featured = articles[0] ?? null
   const rest     = articles.slice(1)
 

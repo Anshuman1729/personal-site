@@ -6,7 +6,7 @@ import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
 import ReadingProgress from '@/components/ReadingProgress'
 import ArticleNewsletterCTA from '@/components/ArticleNewsletterCTA'
-import { getAllArticles, getArticleBySlug } from '@/lib/articles'
+import { getPublishedArticles, getArticleBySlugDB } from '@/lib/db-articles'
 
 import ROASTimeline from '@/components/articles/ROASTimeline'
 import MetricFilter from '@/components/articles/MetricFilter'
@@ -65,14 +65,11 @@ const MDX_COMPONENTS = {
   ),
 }
 
-export async function generateStaticParams() {
-  const articles = getAllArticles()
-  return articles.map(a => ({ slug: a.slug }))
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params
-  const article = getArticleBySlug(slug)
+  const article = await getArticleBySlugDB(slug)
   if (!article) return {}
   return {
     title: article.title,
@@ -96,14 +93,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function ArticlePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const article = getArticleBySlug(slug)
+  const article = await getArticleBySlugDB(slug)
   if (!article) notFound()
 
   const formattedDate = new Date(article.date).toLocaleDateString('en-IN', {
     month: 'long', year: 'numeric',
   })
 
-  const allArticles = getAllArticles()
+  const allArticles = await getPublishedArticles()
   const related = allArticles
     .filter(a => a.slug !== slug)
     .sort((a, b) => (a.tag === article.tag ? -1 : 0) - (b.tag === article.tag ? -1 : 0))
