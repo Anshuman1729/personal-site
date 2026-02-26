@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const BEEHIIV_PUB_ID = 'pub_1209a3dd-cebb-4f60-b283-177893e6a2cb'
-const BEEHIIV_API_KEY = 'LUeYUUu3sqIuQMbdBlnh46rcDzFPhAhC9dDKKmqnAyMqebYZCUf9eaHp4F6Joj7Q'
+const BEEHIIV_PUB_ID  = process.env.BEEHIIV_PUB_ID!
+const BEEHIIV_API_KEY = process.env.BEEHIIV_API_KEY!
 
 export async function POST(req: NextRequest) {
   try {

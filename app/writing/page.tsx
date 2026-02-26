@@ -2,15 +2,18 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import Nav from '@/components/Nav'
 import Footer from '@/components/Footer'
-import { getAllArticles } from '@/lib/articles'
+import ArticleList from '@/components/ArticleList'
+import { getPublishedArticles } from '@/lib/db-articles'
+
+export const dynamic = 'force-dynamic'
 
 export const metadata: Metadata = {
   title: 'Writing',
   description: 'Essays on performance marketing, growth systems, and unit economics.',
 }
 
-export default function WritingPage() {
-  const articles = getAllArticles()
+export default async function WritingPage() {
+  const articles = await getPublishedArticles()
   const featured = articles[0] ?? null
   const rest     = articles.slice(1)
 
@@ -99,59 +102,13 @@ export default function WritingPage() {
       {/* ARTICLE LIST */}
       <section style={{ paddingBottom: 100 }}>
         <div className="wrap" style={{ maxWidth: 1080, margin: '0 auto' }}>
-          {articles.length === 0 && (
+          {articles.length === 0 ? (
             <p style={{ paddingTop: 64, color: 'var(--text-3)', fontSize: '0.95rem' }}>
               First essays coming soon.
             </p>
+          ) : (
+            <ArticleList articles={articles} />
           )}
-          {articles.map((article, i) => (
-            <Link key={article.slug} href={`/writing/${article.slug}`} className="grid-article-row" style={{
-              padding: '32px 0',
-              borderBottom: '1px solid var(--border)',
-              borderTop: i === 0 ? '1px solid var(--border)' : 'none',
-              textDecoration: 'none', color: 'inherit',
-              transition: 'padding-left 0.3s cubic-bezier(0.16,1,0.3,1)',
-            }}>
-              <div className="article-index">
-                {String(i + 1).padStart(2, '0')}
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                  <span style={{
-                    fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em',
-                    textTransform: 'uppercase', color: 'var(--text-4)',
-                    background: 'var(--bg-card)', padding: '3px 10px', borderRadius: 100,
-                  }}>
-                    {article.tag}
-                  </span>
-                </div>
-                <div style={{ fontSize: '1.05rem', fontWeight: 700, letterSpacing: '-0.015em', color: 'var(--text)', lineHeight: 1.3 }}>
-                  {article.title}
-                </div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-3)', lineHeight: 1.6, maxWidth: 600 }}>
-                  {article.excerpt}
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginTop: 4 }}>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--text-4)' }}>
-                    {new Date(article.date).toLocaleDateString('en-IN', { month: 'short', year: 'numeric' })}
-                  </span>
-                  <span style={{ fontSize: '0.72rem', color: 'var(--text-4)' }}>· {article.readingTime}</span>
-                </div>
-              </div>
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 8, paddingTop: 3 }}>
-                <span style={{ fontSize: '1rem', color: 'var(--text-4)' }}>↗</span>
-                <span style={{
-                  fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em',
-                  textTransform: 'uppercase', color: '#16a34a',
-                  border: '1px solid rgba(34,197,94,0.3)',
-                  background: 'rgba(34,197,94,0.06)',
-                  padding: '3px 10px', borderRadius: 100, whiteSpace: 'nowrap',
-                }}>
-                  Published
-                </span>
-              </div>
-            </Link>
-          ))}
         </div>
       </section>
 
